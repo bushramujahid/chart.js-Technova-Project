@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNova Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            width: 100%;
+            background: #111827;
+            color: white;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-button {
+            background: #2563eb;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .nav-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================== */
+
+        .page-header {
+            max-width: 1200px;
+            margin: 35px auto 25px;
+            padding: 0 20px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================== */
+
+        .dashboard {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px 50px;
+        }
+
+        /* =========================
+           CHART CARDS
+        ========================== */
+
+        .chart-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+        }
+
+        .chart-header h2 {
+            font-size: 20px;
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .chart-header p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+        }
+
+        .chart-container {
+            width: 100%;
+            margin: auto;
+        }
+
+        canvas {
+            width: 100% !important;
+            max-height: 350px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header {
+                margin-top: 25px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .chart-card {
+                padding: 18px;
+            }
+
+            .chart-wrapper {
+                min-height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Tech<span>Nova</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#" class="nav-button">Overview</a></li>
+        </ul>
+
+    </nav>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="page-header">
+        <h1>TechNova Performance Dashboard</h1>
+        <p>Monitor revenue, expenses and profit performance over the last six months.</p>
+    </div>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <main class="dashboard">
+
+        <div class="chart-container">
+
+            <!-- LINE CHART -->
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <h2>Line Chart</h2>
+                    <p>Revenue, expenses and profit performance</p>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="myChart1"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- BAR CHART -->
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <h2>Bar Chart</h2>
+                    <p>Monthly revenue comparison</p>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="myChart2"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- PIE CHART -->
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <h2>Pie Chart</h2>
+                    <p>June profit distribution</p>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="myChart3"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+        © 2026 TechNova Dashboard. All rights reserved.
+    </footer>
+
+
+    <!-- =========================
+         CHART.JS
+    ========================== -->
+
+    <script>
+
+        const ctx1 = document.getElementById('myChart1');
+        const ctx2 = document.getElementById('myChart2');
+        const ctx3 = document.getElementById('myChart3');
+
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+
+        const revenue = [50000, 60000, 55000, 70000, 75000, 80000];
+
+        const expenses = [30000, 35000, 32000, 40000, 42000, 45000];
+
+        const profit = [20000, 25000, 23000, 30000, 33000, 35000];
+
+
+        // LINE CHART
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue,
+                    borderColor: 'blue',
+                    fill: false
+                },
+                {
+                    label: 'Expenses',
+                    data: expenses,
+                    borderColor: 'red',
+                    fill: false
+                },
+                {
+                    label: 'Profit',
+                    data: profit,
+                    borderColor: 'green',
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Company Performance Over 6 Months'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+
+        // BAR CHART
+        // Showing revenue only
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue,
+                    backgroundColor: 'blue'
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Monthly Revenue'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+
+        // PIE CHART
+        // Showing profit distribution for June
+
+        new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: ['Reinvestment %', 'Salaries %', 'Misc %'],
+                datasets: [{
+                    label: 'Profit Distribution',
+                    data: [40, 35, 25],
+                    backgroundColor: ['blue', 'red', 'green']
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'June Profit Distribution'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
+
